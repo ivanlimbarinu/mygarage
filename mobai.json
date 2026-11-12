@@ -1,0 +1,32 @@
+{
+  "build": {
+    "ios": {
+      "debug": {
+        "command": "flutter build ios --simulator --debug --dart-define-from-file=config/supabase.public.json",
+        "app": "build/ios/iphonesimulator/Runner.app"
+      },
+      "device": {
+        "command": "flutter build ipa --debug --export-options-plist \"$MOBAI_EXPORT_OPTIONS\" --dart-define-from-file=config/supabase.public.json",
+        "app": "build/ios/ipa/*.ipa"
+      },
+      "release": {
+        "command": "flutter build ipa --release --export-options-plist \"$MOBAI_EXPORT_OPTIONS\" --dart-define-from-file=config/supabase.public.json",
+        "app": "build/ios/ipa/*.ipa"
+      }
+    },
+    "android": {
+      "debug": {
+        "command": "flutter build apk --debug --dart-define-from-file=config/supabase.public.json",
+        "app": "build/app/outputs/flutter-apk/app-debug.apk"
+      },
+      "release": {
+        "command": "flutter build appbundle --release --dart-define-from-file=config/supabase.public.json",
+        "app": "build/app/outputs/bundle/release/app-release.aab"
+      },
+      "releaseApk": {
+        "command": "flutter build apk --release --dart-define-from-file=config/supabase.public.json",
+        "app": "build/app/outputs/flutter-apk/app-release.apk"
+      }
+    }
+  }
+}
