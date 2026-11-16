@@ -1,0 +1,52 @@
+
+name: MyGarage iPhone Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-ios:
+    name: Build IPA Release
+    runs-on: macos-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout progetto
+        uses: actions/checkout@v4
+
+      - name: Installa Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.5'
+          channel: stable
+          cache: true
+
+      - name: Installa dipendenze
+        run: flutter pub get
+
+      - name: Verifica configurazione Supabase
+        run: test -f config/supabase.public.json
+
+      - name: Compila iOS Release
+        run: |
+          flutter build ios \
+            --release \
+            --no-codesign \
+            --dart-define-from-file=config/supabase.public.json
+
+      - name: Crea IPA per Sideloadly
+        run: |
+          mkdir -p Payload
+          cp -R build/ios/iphoneos/Runner.app Payload/
+          zip -qry MyGarage-Release.ipa Payload
+
+      - name: Carica IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyGarage-Release
+          path: MyGarage-Release.ipa
+          if-no-files-found: error
+          retention-days: 7
