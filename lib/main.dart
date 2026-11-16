@@ -78,14 +78,12 @@ class Logo extends StatelessWidget {
   final double size;
   const Logo({super.key, this.size = 64});
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => Image.asset(
+    'assets/mygarage_logo.png',
     width: size,
     height: size,
-    decoration: BoxDecoration(
-      color: coral,
-      borderRadius: BorderRadius.circular(size * .28),
-    ),
-    child: Icon(Icons.speed, size: size * .55, color: Colors.white),
+    fit: BoxFit.contain,
+    semanticLabel: 'MyGarage',
   );
 }
 
@@ -149,7 +147,7 @@ class _SplashState extends State<SplashPage> {
               const Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Logo(size: 98),
+                  Logo(size: 180),
                   SizedBox(height: 24),
                   Text(
                     'MyGarage',
@@ -643,6 +641,8 @@ class _GarageState extends State<GarageHomePage> with WidgetsBindingObserver {
                       if (tab == 0) ...[
                         Row(
                           children: [
+                            const Logo(size: 64),
+                            const SizedBox(width: 12),
                             const Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
